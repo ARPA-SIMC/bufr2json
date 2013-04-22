@@ -1,0 +1,42 @@
+bufr2json (7)
+=============
+
+NAME
+----
+bufr2json - convert BUFR files to JSON
+
+SYNOPSYS
+--------
+*@PKGLIBDIR@/bufr2json* [OPTION]... [FILE]...
+
+DESCRIPTION
+-----------
+This command converts BUFR files to JSON.
+
+*--indent*: generate indented output
+
+*--no-indent*: generate non-indented output
+
+*--collapse*: collapse properties
+
+*--no-collapse*: do not collapse properties
+
+*--station-ctx*: print station context
+
+*--no-station-ctx*: do not print station context
+
+*--ignore-empty*: ignore empty messages
+
+*--print-empty*: print empty messages
+
+*-h,--help*: show this help and exit
+
+*-V,--version*: show version and exit
+
+AUTHOR
+------
+Written by Emanuele Di Giacomo <edigiacomo@arpa.emr.it>
+
+COPYING
+-------
+Copyright \(C) 2012 ARPA-SIMC <urpsim@smr.arpa.emr.it>
