@@ -1,0 +1,42 @@
+Name:           bufr2json
+Version:        0.1
+Release:        1%{?dist}
+Summary:        BUFR to JSON converter
+
+License:        GPLv2+
+URL:            http://www.arpa.emr.it/sim
+Source0:        %{name}-%{version}.tar.gz
+
+BuildRequires:  libdballe-devel
+BuildRequires:  yajl-devel
+Requires:       yajl
+Requires:       dballe
+
+%description
+BUFR to JSON converter
+
+
+%prep
+%setup -q
+
+
+%build
+%configure
+make %{?_smp_mflags}
+
+
+%install
+rm -rf $RPM_BUILD_ROOT
+%make_install
+
+
+%files
+%doc
+%{_bindir}/bufr2json
+%doc %{_mandir}/man1/*
+
+
+
+%changelog
+* Mon Apr 22 2013 Emanuele Di Giacomo <edigiacomo@arpa.emr.it>
+- First release
