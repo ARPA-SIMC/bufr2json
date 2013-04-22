@@ -16,5 +16,8 @@ CFLAGS="$CFLAGS $DEVEL_CFLAGS"
 
 AC_CHECK_LIB([yajl], [yajl_gen_alloc])
 
+AC_PATH_PROG([HELP2MAN], [help2man])
+AM_CONDITIONAL([HAVE_HELP2MAN], [test x$HELP2MAN != x])
+
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

@@ -5,9 +5,11 @@ depcomp
 configure
 config.status
 config.log
+config.h.in~
 config.h.in
 config.h
 bufr2json.o
+bufr2json.1
 bufr2json
 autom4te.cache/
 aclocal.m4
