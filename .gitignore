@@ -1,0 +1,16 @@
+stamp-h1
+missing
+install-sh
+depcomp
+configure
+config.status
+config.log
+config.h.in
+config.h
+bufr2json.o
+bufr2json
+autom4te.cache/
+aclocal.m4
+Makefile.in
+Makefile
+.deps
