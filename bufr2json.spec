@@ -7,10 +7,10 @@ License:        GPLv2+
 URL:            http://www.arpa.emr.it/sim
 Source0:        %{name}-%{version}.tar.gz
 
-BuildRequires:  libdballe-devel
+BuildRequires:  libdballe-devel >= 6.0
 BuildRequires:  yajl-devel
 Requires:       yajl
-Requires:       dballe
+Requires:       dballe >= 6.0
 
 %description
 BUFR to JSON converter

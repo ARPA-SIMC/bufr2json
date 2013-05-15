@@ -281,7 +281,7 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
 		json.end_map();
 		flush();
 	}
-	virtual void operator()(const dballe::cmdline::Item& item) {
+	virtual bool operator()(const dballe::cmdline::Item& item) {
 		dump(*(item.msgs));
 		flush();
 	}
