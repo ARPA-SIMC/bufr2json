@@ -284,6 +284,7 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
 	virtual bool operator()(const dballe::cmdline::Item& item) {
 		dump(*(item.msgs));
 		flush();
+        return true;
 	}
 };
 
@@ -368,6 +369,7 @@ int main(int argc, char **argv)
 	opts.collapse = ( input_options.collapse ? true : false );
 
 	GeoJSONDumper dumper(std::cout, opts);
+
 	reader.read(inputlist, dumper);
 
 	return 0;
