@@ -1,10 +1,12 @@
+SUBDIRS = embedded/libgeohash
+
 bin_PROGRAMS = bufr2json
 
 bufr2json_SOURCES = bufr2json.cc
 
-bufr2json_CPPFLAGS = -I$(top_srcdir) -I$(top_builddir)
+bufr2json_CPPFLAGS = -I$(top_srcdir) -I$(top_builddir) -I$(top_srcdir)/embedded/libgeohash
 
-bufr2json_LDFLAGS = -ldballe -lyajl
+bufr2json_LDADD = -ldballe -lyajl $(top_builddir)/embedded/libgeohash/libgeohash.la
 
 CLEANFILES =
 

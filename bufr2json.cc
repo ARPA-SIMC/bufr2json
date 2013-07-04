@@ -29,6 +29,8 @@
 
 #include <yajl/yajl_gen.h>
 
+#include <geohash.h>
+
 /**
  * Simple C++ wrapper for yajl_gen
  */
@@ -184,6 +186,11 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
 		dump(ctx.trange);
 		json.add_string("network");
 		json.add_string(msg.get_rep_memo_var() ? msg.get_rep_memo_var()->enqc() : dballe::Msg::repmemo_from_type(msg.type));
+        char *hash = GEOHASH_encode(msg.get_latitude_var()->enqd(), msg.get_longitude_var()->enqd(), 10);
+        json.add_string("geohash");
+        json.add_string(hash);
+        delete hash;
+
 
 		dump(var);
 

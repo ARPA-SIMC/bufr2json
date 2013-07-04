@@ -9,6 +9,7 @@ AC_CONFIG_HEADERS([config.h])
 # Checks for programs.
 AC_PROG_CXX
 AM_INIT_AUTOMAKE([foreign nostdinc subdir-objects])
+LT_INIT
 
 PKG_CHECK_MODULES([DBALLE], [libdballe >= 6.0])
 LIBS="$LIBS $DBALLE_LIBS"
@@ -19,5 +20,6 @@ AC_CHECK_LIB([yajl], [yajl_gen_alloc])
 AC_PATH_PROG([HELP2MAN], [help2man])
 AM_CONDITIONAL([HAVE_HELP2MAN], [test x$HELP2MAN != x])
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile
+		 embedded/libgeohash/Makefile])
 AC_OUTPUT
