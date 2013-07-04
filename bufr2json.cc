@@ -96,8 +96,10 @@ struct DumperOptions {
 	bool station_ctx;
 	/// if true, collapse the properties
 	bool collapse;
+    // if true, output the attributes
+    bool attributes;
 
-	DumperOptions() : beautify(false), ignore_empty(true), station_ctx(false), collapse(true) {}
+	DumperOptions() : beautify(false), ignore_empty(true), station_ctx(false), collapse(true), attributes(false) {}
 };
 
 /**
@@ -239,7 +241,7 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
 		else
 			json.add_null();
 	}
-	void dump(const wreport::Var& var, bool withattr=true) {
+	void dump(const wreport::Var& var) {
 		json.add_string("bcode");
 		json.add_string(wreport::varcode_format(var.info()->var));
 		json.add_string("value");
@@ -252,21 +254,38 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
 		} else {
 			json.add_null();
 		}
-#if 0
-		if (withattr) {
-			const wreport::Var *attr = var.next_attr();
-			if (attr) {
-				json.add_string("attrs");
-				json.start_list();
-				while (attr) {
-					dump(*attr, false);
-					attr = attr->next_attr();
-				}
-				json.end_list();
-			}
+		if (opts.attributes) {
+            struct attrcodes_t {
+                const char* code;
+                const char* name;
+            } attrcodes[] = {
+                { "B33192", "climate_consistency" },
+                { "B33193", "time_consistency" },
+                { "B33194", "space_consistency" },
+                { "B33196", "invalidated" },
+                { "B33197", "manually_replacement" },
+                { NULL, NULL }
+            };
+
+            if (!opts.collapse) {
+                json.add_string("attr");
+                json.start_map();
+            }
+            for (struct attrcodes_t *a = attrcodes; a->code != NULL; ++a) {
+                const wreport::Var *attr = var.enqa(wreport::descriptor_code(a->code));
+                if (!opts.collapse)
+                    json.add_string(a->name);
+                else
+                    json.add_string(std::string("attr_") + a->name);
+                if (attr)
+                    json.add_double(attr->enqd());
+                else
+                    json.add_null();
+            }
+            if (!opts.collapse) {
+                json.end_map();
+            }
 		}
-		json.end_map();
-#endif
 	}
  public:
 	GeoJSONDumper(std::ostream &out, DumperOptions &opts) : out(out), opts(opts), json(opts.beautify) {
@@ -322,11 +341,13 @@ int main(int argc, char **argv)
 		int ignore_empty;
 		int collapse;
 		int station_ctx;
+        int attributes;
 	} input_options = {
 		false,
 		true,
 		true,
 		false,
+        false
 	};
 	std::list<std::string> inputlist;
 
@@ -340,6 +361,8 @@ int main(int argc, char **argv)
 			{ "no-collapse",  no_argument, &input_options.collapse,      false },
 			{ "station-ctx",  no_argument, &input_options.station_ctx,   true  },
 			{ "no-station-ctx", no_argument, &input_options.station_ctx, false },
+            { "attributes",   no_argument, &input_options.attributes,    true  },
+            { "no-attributes",no_argument, &input_options.attributes,    false },
 			{ "help",         no_argument, 0,                            'h'   },
 			{ "version",      no_argument, 0,                            'V'   },
 			{ 0, 0, 0, 0 }
@@ -367,6 +390,7 @@ int main(int argc, char **argv)
 	opts.ignore_empty = ( input_options.ignore_empty ? true : false );
 	opts.station_ctx = ( input_options.station_ctx ? true : false );
 	opts.collapse = ( input_options.collapse ? true : false );
+    opts.attributes = ( input_options.attributes ? true : false );
 
 	GeoJSONDumper dumper(std::cout, opts);
 
