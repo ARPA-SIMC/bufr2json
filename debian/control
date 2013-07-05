@@ -1,0 +1,12 @@
+Source: bufr2json
+Section: misc
+Priority: optional
+Maintainer: Emanuele Di Giacomo <edigiacomo@arpa.emr.it>
+Build-Depends: debhelper (>= 8.0.0), autotools-dev, hardening-wrapper
+Standards-Version: 3.9.3
+
+Package: bufr2json
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: BUFR to JSON converter
+ Convert BUFR files to JSON format
