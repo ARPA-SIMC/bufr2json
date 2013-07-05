@@ -27,6 +27,7 @@
 #include <dballe/msg/context.h>
 #include <dballe/cmdline/processor.h>
 
+#include <yajl/yajl_version.h>
 #include <yajl/yajl_gen.h>
 
 #include <geohash.h>
@@ -40,15 +41,26 @@ class YajlGenerator {
 
  public:
 	YajlGenerator(bool beautify, const char* indent=NULL) {
+#if YAJL_MAJOR == 1
 		yajl_gen_config conf = {beautify, indent};
 		json = yajl_gen_alloc(&conf, NULL);
+#elif YAJL_MAJOR == 2
+        json = yajl_gen_alloc(NULL);
+        yajl_gen_config(json, yajl_gen_beautify, beautify);
+        if (indent)
+            yajl_gen_config(json, yajl_gen_indent_string, indent);
+#endif
 	}
 	~YajlGenerator() {
 		yajl_gen_free(json);
 	}
 	std::string flush() {
 		const unsigned char* buf;
+#if YAJL_MAJOR == 1
 		unsigned int len;
+#elif YAJL_MAJOR == 2
+        size_t len;
+#endif
 		yajl_gen_get_buf(json, &buf, &len);
 		std::string str((const char*)buf);
 		yajl_gen_clear(json);
