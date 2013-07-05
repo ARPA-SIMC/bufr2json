@@ -1,1 +1,1 @@
-SUBDIRS = embedded/libgeohash src doc
+SUBDIRS = embedded/libgeohash src doc test

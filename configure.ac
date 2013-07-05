@@ -23,5 +23,6 @@ AM_CONDITIONAL([HAVE_HELP2MAN], [test x$HELP2MAN != x])
 AC_CONFIG_FILES([Makefile
 		 embedded/libgeohash/Makefile
 		 src/Makefile
-		 doc/Makefile])
+		 doc/Makefile
+		 test/Makefile])
 AC_OUTPUT
