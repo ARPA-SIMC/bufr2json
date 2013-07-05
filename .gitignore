@@ -12,13 +12,13 @@ config.h.in~
 config.h.in
 config.h
 config.guess
-bufr2json.1
 bufr2json-*.tar.gz
-bufr2json
 autom4te.cache/
 aclocal.m4
 Makefile.in
 Makefile
+/src/bufr2json
+/doc/bufr2json.1
 .libs
 .deps
 *.o

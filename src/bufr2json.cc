@@ -340,6 +340,8 @@ void show_help(std::ostream& out) {
 			<< " --no-station-ctx   do not print station context" << std::endl
 			<< " --ignore-empty     ignore empty messages" << std::endl
 			<< " --print-empty      print empty messages" << std::endl
+            << " --attributes       print attributes" << std::endl
+            << " --no-attributes    do not print attributes" << std::endl
 			<< " -h,--help          show this help and exit" << std::endl
 			<< " -V,--version       show version and exit" << std::endl
 			<< std::endl
