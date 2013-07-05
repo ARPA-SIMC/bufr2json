@@ -112,8 +112,10 @@ struct DumperOptions {
 	bool collapse;
     // if true, output the attributes
     bool attributes;
+    // if true, dump geohash
+    bool geohash;
 
-	DumperOptions() : beautify(false), ignore_empty(true), station_ctx(false), collapse(true), attributes(false) {}
+	DumperOptions() : beautify(false), ignore_empty(true), station_ctx(false), collapse(true), attributes(false), geohash(false) {}
 };
 
 /**
@@ -198,11 +200,13 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
 		dump(ctx.trange);
 		json.add_string("network");
 		json.add_string(msg.get_rep_memo_var() ? msg.get_rep_memo_var()->enqc() : dballe::Msg::repmemo_from_type(msg.type));
-        char *hash = GEOHASH_encode(msg.get_latitude_var()->enqd(), msg.get_longitude_var()->enqd(), 10);
-        json.add_string("geohash");
-        json.add_string(hash);
-        delete hash;
 
+        if (opts.geohash) {
+            char *hash = GEOHASH_encode(msg.get_latitude_var()->enqd(), msg.get_longitude_var()->enqd(), 12);
+            json.add_string("geohash");
+            json.add_string(hash);
+            delete hash;
+        }
 
 		dump(var);
 
@@ -342,6 +346,8 @@ void show_help(std::ostream& out) {
 			<< " --print-empty      print empty messages" << std::endl
             << " --attributes       print attributes" << std::endl
             << " --no-attributes    do not print attributes" << std::endl
+            << " --geohash          print geohash" << std::endl
+            << " --no-geohash       do not print geohash" << std::endl
 			<< " -h,--help          show this help and exit" << std::endl
 			<< " -V,--version       show version and exit" << std::endl
 			<< std::endl
@@ -363,11 +369,13 @@ int main(int argc, char **argv)
 		int collapse;
 		int station_ctx;
         int attributes;
+        int geohash;
 	} input_options = {
 		false,
 		true,
 		true,
 		false,
+        false,
         false
 	};
 	std::list<std::string> inputlist;
@@ -384,6 +392,8 @@ int main(int argc, char **argv)
 			{ "no-station-ctx", no_argument, &input_options.station_ctx, false },
             { "attributes",   no_argument, &input_options.attributes,    true  },
             { "no-attributes",no_argument, &input_options.attributes,    false },
+            { "geohash",      no_argument, &input_options.geohash,       true  },
+            { "no-geohash",   no_argument, &input_options.geohash,       false },
 			{ "help",         no_argument, 0,                            'h'   },
 			{ "version",      no_argument, 0,                            'V'   },
 			{ 0, 0, 0, 0 }
@@ -412,6 +422,7 @@ int main(int argc, char **argv)
 	opts.station_ctx = ( input_options.station_ctx ? true : false );
 	opts.collapse = ( input_options.collapse ? true : false );
     opts.attributes = ( input_options.attributes ? true : false );
+    opts.geohash = ( input_options.geohash ? true : false );
 
 	GeoJSONDumper dumper(std::cout, opts);
 
