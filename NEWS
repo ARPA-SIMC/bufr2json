@@ -1,0 +1,13 @@
+Version 0.4 - 2013-07-05
+
+- libyajl2 support
+
+- Option `--attributes` print the following data attributes:
+  * B33192: climate_consistency
+  * B33193: time_consistency
+  * B33194: space_consistency
+  * B33196: invalidated
+  * B33197: manual_replacement
+
+- Option `--geohash` print the geohash (length:12) (source:
+  https://github.com/lyokato/libgeohash)

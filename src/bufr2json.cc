@@ -286,7 +286,7 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
                 { "B33193", "time_consistency" },
                 { "B33194", "space_consistency" },
                 { "B33196", "invalidated" },
-                { "B33197", "manually_replacement" },
+                { "B33197", "manual_replacement" },
                 { NULL, NULL }
             };
 
