@@ -114,8 +114,10 @@ struct DumperOptions {
     bool attributes;
     // if true, dump geohash
     bool geohash;
+    // if true, skip invalid data
+    bool skip_invalid;
 
-	DumperOptions() : beautify(false), ignore_empty(true), station_ctx(false), collapse(true), attributes(false), geohash(false) {}
+	DumperOptions() : beautify(false), ignore_empty(true), station_ctx(false), collapse(true), attributes(false), geohash(false), skip_invalid(true) {}
 };
 
 /**
@@ -162,6 +164,11 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
 	}
 
 	void dump(const dballe::Msg& msg, const dballe::msg::Context& ctx, const wreport::Var& var) {
+        if (opts.skip_invalid) {
+            const wreport::Var *attr = var.enqa(WR_VAR(0,33,196));
+            if (attr && attr->enqd())
+                return;
+        }
 		json.start_map();
 		json.add_string("type");
 		json.add_string("Feature");
@@ -348,6 +355,8 @@ void show_help(std::ostream& out) {
             << " --no-attributes    do not print attributes" << std::endl
             << " --geohash          print geohash" << std::endl
             << " --no-geohash       do not print geohash" << std::endl
+            << " --skip-invalid     skip invalid data" << std::endl
+            << " --no-skip-invalid  do not skip invalid data" << std::endl
 			<< " -h,--help          show this help and exit" << std::endl
 			<< " -V,--version       show version and exit" << std::endl
 			<< std::endl
@@ -370,13 +379,15 @@ int main(int argc, char **argv)
 		int station_ctx;
         int attributes;
         int geohash;
+        int skip_invalid;
 	} input_options = {
 		false,
 		true,
 		true,
 		false,
         false,
-        false
+        false,
+        true
 	};
 	std::list<std::string> inputlist;
 
@@ -394,6 +405,8 @@ int main(int argc, char **argv)
             { "no-attributes",no_argument, &input_options.attributes,    false },
             { "geohash",      no_argument, &input_options.geohash,       true  },
             { "no-geohash",   no_argument, &input_options.geohash,       false },
+            { "skip-invalid", no_argument, &input_options.skip_invalid,  true  },
+            { "no-skip-invalid", no_argument, &input_options.skip_invalid,  false },
 			{ "help",         no_argument, 0,                            'h'   },
 			{ "version",      no_argument, 0,                            'V'   },
 			{ 0, 0, 0, 0 }
@@ -423,6 +436,7 @@ int main(int argc, char **argv)
 	opts.collapse = ( input_options.collapse ? true : false );
     opts.attributes = ( input_options.attributes ? true : false );
     opts.geohash = ( input_options.geohash ? true : false );
+    opts.skip_invalid = (input_options.skip_invalid ? true : false );
 
 	GeoJSONDumper dumper(std::cout, opts);
 
