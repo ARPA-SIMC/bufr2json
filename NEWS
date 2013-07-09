@@ -1,3 +1,9 @@
+Version 0.5 - 2013-07-09
+
+- Invalid data (B33196!=0) are skipped by default
+
+- Option `--skip-invalid` and `--no-skip-invalid`
+
 Version 0.4 - 2013-07-05
 
 - libyajl2 support
