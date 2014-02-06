@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013  ARPA-SIM <urpsim@smr.arpa.emr.it>
+ * Copyright (C) 2013,2014  ARPA-SIM <urpsim@smr.arpa.emr.it>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -193,6 +193,10 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
 
       json.add_string("properties");
       json.start_map();
+      json.add_string("lon");
+      json.add_int(msg.get_longitude_var()->enqi());
+      json.add_string("lat");
+      json.add_int(msg.get_latitude_var()->enqi());
       json.add_string("datetime");
       if (!ctx.is_station()) {
           int date[6];
