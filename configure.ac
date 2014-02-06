@@ -15,7 +15,9 @@ PKG_CHECK_MODULES([DBALLE], [libdballe >= 6.0])
 LIBS="$LIBS $DBALLE_LIBS"
 CFLAGS="$CFLAGS $DBALLE_CFLAGS"
 
-AC_CHECK_LIB([yajl], [yajl_gen_alloc])
+AC_CHECK_LIB([yajl], [yajl_gen_alloc],
+	     [LIBS="$LIBS -lyajl"],
+	     [AC_MSG_ERROR(["libyajl not found"])])
 
 AC_PATH_PROG([HELP2MAN], [help2man])
 AM_CONDITIONAL([HAVE_HELP2MAN], [test x$HELP2MAN != x])
