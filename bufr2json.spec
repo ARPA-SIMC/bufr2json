@@ -1,5 +1,5 @@
 Name:           bufr2json
-Version:        0.5
+Version:        0.6
 Release:        1%{?dist}
 Summary:        BUFR to JSON converter
 
@@ -38,6 +38,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Feb 06 2014 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.6-1
+- "lon" and "lat" properties
+
 * Fri Jul 05 2013 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.5-1
 - Skip invalid data
 
