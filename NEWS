@@ -1,3 +1,8 @@
+Version 0.6 - 2014-02-06
+
+- "lon" and "lat" properties
+- Fixed autoconf library check
+
 Version 0.5 - 2013-07-09
 
 - Invalid data (B33196!=0) are skipped by default
