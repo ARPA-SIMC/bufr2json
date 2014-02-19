@@ -350,22 +350,22 @@ void show_help(std::ostream& out) {
     out << "Usage: bufr2json [OPTION]... [FILE]..."  << std::endl
         << "Convert BUFR files to JSON format" << std::endl
         << std::endl
-        << " --indent           generate indented output" << std::endl
-        << " --no-indent        generate non-indented output" << std::endl
-        << " --collapse         collapse properties" << std::endl
-        << " --no-collapse      do not collapse properties" << std::endl
-        << " --station-ctx      print station context" << std::endl
-        << " --no-station-ctx   do not print station context" << std::endl
-        << " --ignore-empty     ignore empty messages" << std::endl
-        << " --print-empty      print empty messages" << std::endl
-        << " --attributes       print attributes" << std::endl
-        << " --no-attributes    do not print attributes" << std::endl
-        << " --geohash[=LENGTH] print geohash. LENGTH defaults to " << BUFR2JSON_DEFAULT_GEOHASH_SIZE << std::endl
-        << " --no-geohash       do not print geohash" << std::endl
-        << " --skip-invalid     skip invalid data" << std::endl
-        << " --no-skip-invalid  do not skip invalid data" << std::endl
-        << " -h,--help          show this help and exit" << std::endl
-        << " -V,--version       show version and exit" << std::endl
+        << " --indent            generate indented output" << std::endl
+        << " --no-indent         generate non-indented output" << std::endl
+        << " --collapse          collapse properties" << std::endl
+        << " --no-collapse       do not collapse properties" << std::endl
+        << " --station-ctx       print station context" << std::endl
+        << " --no-station-ctx    do not print station context" << std::endl
+        << " --ignore-empty      ignore empty messages" << std::endl
+        << " --print-empty       print empty messages" << std::endl
+        << " --attributes        print attributes" << std::endl
+        << " --no-attributes     do not print attributes" << std::endl
+        << " --geohash[=LENGTH]  print geohash. LENGTH defaults to " << BUFR2JSON_DEFAULT_GEOHASH_SIZE << std::endl
+        << " --no-geohash        do not print geohash" << std::endl
+        << " --skip-invalid      skip invalid data" << std::endl
+        << " --no-skip-invalid   do not skip invalid data" << std::endl
+        << " -h,--help           show this help and exit" << std::endl
+        << " -V,--version        show version and exit" << std::endl
         << std::endl
         << "With no FILE, or when FILE is -, read standard input" << std::endl;
 }
