@@ -1,3 +1,9 @@
+bufr2json (0.7-1) unstable; urgency=low
+
+  * Version 0.7
+
+ -- Emanuele Di Giacomo <edigiacomo@arpa.emr.it>  Wed, 19 Feb 2014 09:12:49 +0100
+
 bufr2json (0.4-1) unstable; urgency=low
 
   * Initial release
