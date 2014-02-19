@@ -21,6 +21,7 @@
 #include "config.h"
 #endif
 
+#include <cstdlib>
 #include <iostream>
 
 #include <dballe/msg/msgs.h>
@@ -31,6 +32,8 @@
 #include <yajl/yajl_gen.h>
 
 #include <geohash.h>
+
+#define BUFR2JSON_DEFAULT_GEOHASH_SIZE 12
 
 /**
  * Simple C++ wrapper for yajl_gen
@@ -112,12 +115,12 @@ struct DumperOptions {
     bool collapse;
     // if true, output the attributes
     bool attributes;
-    // if true, dump geohash
-    bool geohash;
+    // if positive, dump geohash
+    int geohash;
     // if true, skip invalid data
     bool skip_invalid;
 
-    DumperOptions() : beautify(false), ignore_empty(true), station_ctx(false), collapse(true), attributes(false), geohash(false), skip_invalid(true) {}
+    DumperOptions() : beautify(false), ignore_empty(true), station_ctx(false), collapse(true), attributes(false), geohash(0), skip_invalid(true) {}
 };
 
 /**
@@ -212,8 +215,8 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
       json.add_string("network");
       json.add_string(msg.get_rep_memo_var() ? msg.get_rep_memo_var()->enqc() : dballe::Msg::repmemo_from_type(msg.type));
 
-      if (opts.geohash) {
-          char *hash = GEOHASH_encode(msg.get_latitude_var()->enqd(), msg.get_longitude_var()->enqd(), 12);
+      if (opts.geohash > 0) {
+          char *hash = GEOHASH_encode(msg.get_latitude_var()->enqd(), msg.get_longitude_var()->enqd(), opts.geohash);
           json.add_string("geohash");
           json.add_string(hash);
           delete hash;
@@ -357,7 +360,7 @@ void show_help(std::ostream& out) {
         << " --print-empty      print empty messages" << std::endl
         << " --attributes       print attributes" << std::endl
         << " --no-attributes    do not print attributes" << std::endl
-        << " --geohash          print geohash" << std::endl
+        << " --geohash[=LENGTH] print geohash. LENGTH defaults to " << BUFR2JSON_DEFAULT_GEOHASH_SIZE << std::endl
         << " --no-geohash       do not print geohash" << std::endl
         << " --skip-invalid     skip invalid data" << std::endl
         << " --no-skip-invalid  do not skip invalid data" << std::endl
@@ -390,7 +393,7 @@ int main(int argc, char **argv)
         true,
         false,
         false,
-        false,
+        0,
         true
     };
     std::list<std::string> inputlist;
@@ -407,8 +410,8 @@ int main(int argc, char **argv)
             {"no-station-ctx",  no_argument,&input_options.station_ctx,  false},
             {"attributes",      no_argument,&input_options.attributes,   true },
             {"no-attributes",   no_argument,&input_options.attributes,   false},
-            {"geohash",         no_argument,&input_options.geohash,      true },
-            {"no-geohash",      no_argument,&input_options.geohash,      false},
+            {"geohash",         optional_argument,0,                     'g'  },
+            {"no-geohash",      no_argument,&input_options.geohash,      0    },
             {"skip-invalid",    no_argument,&input_options.skip_invalid, true },
             {"no-skip-invalid", no_argument,&input_options.skip_invalid, false},
             {"help",            no_argument,0,                           'h'  },
@@ -422,6 +425,13 @@ int main(int argc, char **argv)
             case 0: break;
             case 'h': show_help(std::cout); return 0;
             case 'V': show_version(std::cout); return 0;
+            case 'g': {
+                if (optarg == 0)
+                    input_options.geohash = BUFR2JSON_DEFAULT_GEOHASH_SIZE;
+                else
+                    input_options.geohash = ::atoi(optarg);
+                break;
+            }
             default: show_help(std::cerr); return 1;
         }
     }
@@ -439,7 +449,7 @@ int main(int argc, char **argv)
     opts.station_ctx = ( input_options.station_ctx ? true : false );
     opts.collapse = ( input_options.collapse ? true : false );
     opts.attributes = ( input_options.attributes ? true : false );
-    opts.geohash = ( input_options.geohash ? true : false );
+    opts.geohash = input_options.geohash;
     opts.skip_invalid = (input_options.skip_invalid ? true : false );
 
     GeoJSONDumper dumper(std::cout, opts);
