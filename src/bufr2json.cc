@@ -335,7 +335,8 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
       flush();
   }
   virtual bool operator()(const dballe::cmdline::Item& item) {
-      dump(*(item.msgs));
+      if (item.msgs)
+          dump(*(item.msgs));
       flush();
       return true;
   }
