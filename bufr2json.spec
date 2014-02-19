@@ -1,5 +1,5 @@
 Name:           bufr2json
-Version:        0.6
+Version:        0.7.1
 Release:        1%{?dist}
 Summary:        BUFR to JSON converter
 
@@ -9,6 +9,7 @@ Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires:  libdballe-devel >= 6.0
 BuildRequires:  yajl-devel
+BuildRequires:  help2man
 Requires:       yajl
 Requires:       dballe >= 6.0
 
@@ -38,6 +39,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Feb 19 2014 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.7.1-1
+- Optional geohash size
+- Fixed segfault
+
 * Thu Feb 06 2014 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.6-1
 - "lon" and "lat" properties
 
