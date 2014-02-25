@@ -214,6 +214,11 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
       dump(ctx.trange);
       json.add_string("network");
       json.add_string(msg.get_rep_memo_var() ? msg.get_rep_memo_var()->enqc() : dballe::Msg::repmemo_from_type(msg.type));
+      json.add_string("ident");
+      if (msg.get_ident_var() != NULL)
+          json.add_string(msg.get_ident_var()->enqc());
+      else
+          json.add_null();
 
       if (opts.geohash > 0) {
           char *hash = GEOHASH_encode(msg.get_latitude_var()->enqd(), msg.get_longitude_var()->enqd(), opts.geohash);
