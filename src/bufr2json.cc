@@ -234,45 +234,53 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
       json.end_map();
   }
   void dump(const dballe::Level& level) {
+      std::string keys[] = {
+          "level",
+          "t1", "v1", "t2", "v2"
+      };
       if (opts.collapse) {
-          json.add_string("level_t1");
+          json.add_string(keys[0] + "_" + keys[1]);
           dump(level.ltype1);
-          json.add_string("level_v1");
+          json.add_string(keys[0] + "_" + keys[2]);
           dump(level.l1);
-          json.add_string("level_t2");
+          json.add_string(keys[0] + "_" + keys[3]);
           dump(level.ltype2);
-          json.add_string("level_v2");
+          json.add_string(keys[0] + "_" + keys[4]);
           dump(level.l2);
       } else {
-          json.add_string("level");
+          json.add_string(keys[0]);
           json.start_map();
-          json.add_string("t1");
+          json.add_string(keys[1]);
           dump(level.ltype1);
-          json.add_string("v1");
+          json.add_string(keys[2]);
           dump(level.l1);
-          json.add_string("t2");
+          json.add_string(keys[3]);
           dump(level.ltype2);
-          json.add_string("v2");
+          json.add_string(keys[4]);
           dump(level.l2);
           json.end_map();
       }
   }
   void dump(const dballe::Trange& trange) {
+      std::string keys[] = {
+          "trange",
+          "pind", "p1", "p2"
+      };
       if (opts.collapse) {
-          json.add_string("trange_pind");
+          json.add_string(keys[0] + "_" + keys[1]);
           dump(trange.pind);
-          json.add_string("trange_p1");
+          json.add_string(keys[0] + "_" + keys[2]);
           dump(trange.p1);
-          json.add_string("trange_p2");
+          json.add_string(keys[0] + "_" + keys[3]);
           dump(trange.p2);
       } else {
-          json.add_string("trange");
+          json.add_string(keys[0]);
           json.start_map();
-          json.add_string("pind");
+          json.add_string(keys[1]);
           dump(trange.pind);
-          json.add_string("p1");
+          json.add_string(keys[2]);
           dump(trange.p1);
-          json.add_string("p2");
+          json.add_string(keys[3]);
           dump(trange.p2);
           json.end_map();
       }
