@@ -5,11 +5,15 @@ AC_PREREQ([2.68])
 AC_INIT([bufr2json], [0.8], [edigiacomo@arpa.emr.it])
 AC_CONFIG_SRCDIR([configure.ac])
 AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIR([m4])
 
 # Checks for programs.
 AC_PROG_CXX
 AM_INIT_AUTOMAKE([foreign nostdinc subdir-objects])
 LT_INIT
+
+# Use c++11
+AX_CXX_COMPILE_STDCXX_11
 
 PKG_CHECK_MODULES([DBALLE], [libdballe >= 6.0])
 LIBS="$LIBS $DBALLE_LIBS"
