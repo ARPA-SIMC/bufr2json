@@ -204,7 +204,7 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
       if (!ctx.is_station()) {
           int date[6];
           char datestr[23];
-          msg.parse_date(date);
+          msg.get_datetime().to_array(date);
           sprintf(datestr, "%4d-%02d-%02dT%02d:%02d:%02dZ", date[0], date[1], date[2], date[3], date[4], date[5]);
           json.add_string(datestr);
       } else {
