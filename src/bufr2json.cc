@@ -365,18 +365,11 @@ void show_help(std::ostream& out) {
         << "Convert BUFR files to JSON format" << std::endl
         << std::endl
         << " --indent            generate indented output" << std::endl
-        << " --no-indent         generate non-indented output" << std::endl
-        << " --collapse          collapse properties" << std::endl
+        << " --include-empty     include empty messages" << std::endl
         << " --no-collapse       do not collapse properties" << std::endl
         << " --station-ctx       print station context" << std::endl
-        << " --no-station-ctx    do not print station context" << std::endl
-        << " --ignore-empty      ignore empty messages" << std::endl
-        << " --print-empty       print empty messages" << std::endl
         << " --attributes        print attributes" << std::endl
-        << " --no-attributes     do not print attributes" << std::endl
         << " --geohash[=LENGTH]  print geohash. LENGTH defaults to " << BUFR2JSON_DEFAULT_GEOHASH_SIZE << std::endl
-        << " --no-geohash        do not print geohash" << std::endl
-        << " --skip-invalid      skip invalid data" << std::endl
         << " --no-skip-invalid   do not skip invalid data" << std::endl
         << " -h,--help           show this help and exit" << std::endl
         << " -V,--version        show version and exit" << std::endl
@@ -415,18 +408,11 @@ int main(int argc, char **argv)
     while (1) {
         static struct option long_options[] = {
             {"indent",          no_argument,&input_options.indent,       true },
-            {"no-indent",       no_argument,&input_options.indent,       false},
-            {"ignore-empty",    no_argument,&input_options.ignore_empty, true },
-            {"print-empty",     no_argument,&input_options.ignore_empty, false},
-            {"collapse",        no_argument,&input_options.collapse,     true },
+            {"include-empty",   no_argument,&input_options.ignore_empty, false},
             {"no-collapse",     no_argument,&input_options.collapse,     false},
             {"station-ctx",     no_argument,&input_options.station_ctx,  true },
-            {"no-station-ctx",  no_argument,&input_options.station_ctx,  false},
             {"attributes",      no_argument,&input_options.attributes,   true },
-            {"no-attributes",   no_argument,&input_options.attributes,   false},
             {"geohash",         optional_argument,0,                     'g'  },
-            {"no-geohash",      no_argument,&input_options.geohash,      0    },
-            {"skip-invalid",    no_argument,&input_options.skip_invalid, true },
             {"no-skip-invalid", no_argument,&input_options.skip_invalid, false},
             {"help",            no_argument,0,                           'h'  },
             {"version",         no_argument,0,                           'V'  },
