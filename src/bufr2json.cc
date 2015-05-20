@@ -305,30 +305,21 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
           json.add_null();
       }
       if (opts.attributes) {
-          struct attrcodes_t {
-              const char* code;
-              const char* name;
-          } attrcodes[] = {
-              { "B33192", "climate_consistency" },
-              { "B33193", "time_consistency" },
-              { "B33194", "space_consistency" },
-              { "B33196", "invalidated" },
-              { "B33197", "manual_replacement" },
-              { NULL, NULL }
-          };
-
           if (!opts.collapse) {
               json.add_string("attr");
               json.start_map();
           }
-          for (struct attrcodes_t *a = attrcodes; a->code != NULL; ++a) {
-              const wreport::Var *attr = var.enqa(wreport::descriptor_code(a->code));
+          for (const wreport::Var* attr = var.next_attr(); attr != NULL; attr = attr->next_attr()) {
+              const std::string code = dballe::format_code(attr->code());
               if (!opts.collapse)
-                  json.add_string(a->name);
+                  json.add_string(code);
               else
-                  json.add_string(std::string("attr_") + a->name);
-              if (attr)
-                  json.add_double(attr->enqd());
+                  json.add_string(std::string("attr_") + code);
+              if (attr->isset())
+                  if (attr->info()->is_string() || attr->info()->is_binary())
+                      json.add_string(attr->format());
+                  else
+                      json.add_number(attr->format());
               else
                   json.add_null();
           }
