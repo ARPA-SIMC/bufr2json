@@ -1,5 +1,5 @@
 Name:           bufr2json
-Version:        0.8
+Version:        0.10
 Release:        1%{?dist}
 Summary:        BUFR to JSON converter
 
@@ -7,11 +7,11 @@ License:        GPLv2+
 URL:            http://www.arpa.emr.it/sim
 Source0:        %{name}-%{version}.tar.gz
 
-BuildRequires:  libdballe-devel >= 6.0
+BuildRequires:  libdballe-devel >= 7.1-4737
 BuildRequires:  yajl-devel
 BuildRequires:  help2man
 Requires:       yajl
-Requires:       dballe >= 6.0
+Requires:       dballe >= 7.1-4737
 
 %description
 BUFR to JSON converter
@@ -39,7 +39,13 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-*Tue Feb 25 2014 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.8-1
+* Mon May 25 2015 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.10-1
+- Fixed for dballe API > 7.1-4737
+
+* Wed May 20 2015 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.9-1
+- Added --attributes option
+
+* Tue Feb 25 2014 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.8-1
 - "ident" property
 
 * Wed Feb 19 2014 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.7.1-1
