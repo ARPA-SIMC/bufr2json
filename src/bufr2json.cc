@@ -23,6 +23,7 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <sstream>
 
 #include <dballe/msg/msgs.h>
 #include <dballe/msg/context.h>
@@ -202,11 +203,9 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
       json.add_int(msg.get_latitude_var()->enqi());
       json.add_string("datetime");
       if (!ctx.is_station()) {
-          int date[6];
-          char datestr[23];
-          msg.datetime().to_array(date);
-          sprintf(datestr, "%4d-%02d-%02dT%02d:%02d:%02dZ", date[0], date[1], date[2], date[3], date[4], date[5]);
-          json.add_string(datestr);
+          std::stringstream ss;
+          msg.datetime().to_stream_iso8601(ss, 'T', "Z");
+          json.add_string(ss.str().c_str());
       } else {
           json.add_null();
       }
