@@ -25,6 +25,7 @@
 #include <iostream>
 #include <sstream>
 
+#include <dballe/core/var.h>
 #include <dballe/msg/msgs.h>
 #include <dballe/msg/context.h>
 #include <dballe/cmdline/processor.h>
@@ -309,11 +310,12 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
               json.start_map();
           }
           for (const wreport::Var* attr = var.next_attr(); attr != NULL; attr = attr->next_attr()) {
-              const std::string code = dballe::format_code(attr->code());
+              char code[6] = "";
+              dballe::format_code(attr->code(), code);
               if (!opts.collapse)
                   json.add_string(code);
               else
-                  json.add_string(std::string("attr_") + code);
+                  json.add_string(std::string("attr_") + std::string(code));
               if (attr->isset())
                   if (attr->info()->is_string() || attr->info()->is_binary())
                       json.add_string(attr->format());
