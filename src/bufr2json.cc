@@ -26,7 +26,7 @@
 #include <sstream>
 
 #include <dballe/core/var.h>
-#include <dballe/msg/msgs.h>
+#include <dballe/msg/msg.h>
 #include <dballe/msg/context.h>
 #include <dballe/cmdline/processor.h>
 
@@ -146,10 +146,10 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
           return true;
       return false;
   }
-  void dump(const dballe::Msgs& msgs) {
-      for (dballe::Msgs::const_iterator i = msgs.begin();
+  void dump(const dballe::Messages& msgs) {
+      for (dballe::Messages::const_iterator i = msgs.begin();
            i != msgs.end(); ++i) {
-          dump(**i);
+          dump(dballe::Msg::downcast(*i));
       }
       flush();
   }
@@ -205,7 +205,7 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
       json.add_string("datetime");
       if (!ctx.is_station()) {
           std::stringstream ss;
-          msg.datetime().to_stream_iso8601(ss, 'T', "Z");
+          msg.get_datetime().to_stream_iso8601(ss, 'T', "Z");
           json.add_string(ss.str().c_str());
       } else {
           json.add_null();
@@ -293,10 +293,11 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
   }
   void dump(const wreport::Var& var) {
       json.add_string("bcode");
-      json.add_string(wreport::varcode_format(var.info()->var));
+      json.add_string(wreport::varcode_format(var.code()));
       json.add_string("value");
       if (var.isset()) {
-          if (var.info()->is_string() || var.info()->is_binary()) {
+          if (var.info()->type == wreport::Vartype::String ||
+              var.info()->type == wreport::Vartype::Binary) {
               json.add_string(var.format());
           } else {
               json.add_number(var.format());
@@ -317,7 +318,8 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
               else
                   json.add_string(std::string("attr_") + std::string(code));
               if (attr->isset())
-                  if (attr->info()->is_string() || attr->info()->is_binary())
+                  if (attr->info()->type == wreport::Vartype::String ||
+                      attr->info()->type == wreport::Vartype::Binary)
                       json.add_string(attr->format());
                   else
                       json.add_number(attr->format());
