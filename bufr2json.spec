@@ -1,5 +1,5 @@
 Name:           bufr2json
-Version:        0.10
+Version:        0.12
 Release:        1%{?dist}
 Summary:        BUFR to JSON converter
 
@@ -7,11 +7,11 @@ License:        GPLv2+
 URL:            http://www.arpa.emr.it/sim
 Source0:        %{name}-%{version}.tar.gz
 
-BuildRequires:  libdballe-devel >= 7.1-4737
+BuildRequires:  libdballe-devel >= 7.2-1
 BuildRequires:  yajl-devel
 BuildRequires:  help2man
 Requires:       yajl
-Requires:       dballe >= 7.1-4737
+Requires:       dballe >= 7.2-1
 
 %description
 BUFR to JSON converter
