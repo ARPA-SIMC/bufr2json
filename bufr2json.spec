@@ -1,5 +1,5 @@
 Name:           bufr2json
-Version:        0.12
+Version:        0.13
 Release:        1%{?dist}
 Summary:        BUFR to JSON converter
 
@@ -39,6 +39,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Sep  4 2015 manuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.13-1
+- Removed options
+- Dballe format
+
 * Mon May 25 2015 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.10-1
 - Fixed for dballe API > 7.1-4737
 
