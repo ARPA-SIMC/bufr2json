@@ -352,7 +352,7 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
   }
 };
 
-struct JSONDumper : public dballe::cmdline::Action {
+struct DballeJSONDumper : public dballe::cmdline::Action {
   private:
     std::ostream& out;
     DumperOptions opts;
@@ -454,10 +454,10 @@ struct JSONDumper : public dballe::cmdline::Action {
     }
 
   public:
-    JSONDumper(std::ostream &out, DumperOptions &opts) : out(out), opts(opts), json(opts.beautify) {
+    DballeJSONDumper(std::ostream &out, DumperOptions &opts) : out(out), opts(opts), json(opts.beautify) {
         json.start_list();
     }
-    ~JSONDumper() {
+    ~DballeJSONDumper() {
         json.end_list();
         flush();
     }
@@ -486,6 +486,7 @@ void show_help(std::ostream& out) {
         << " --attributes        print attributes" << std::endl
         << " --geohash[=LENGTH]  print geohash. LENGTH defaults to " << BUFR2JSON_DEFAULT_GEOHASH_SIZE << std::endl
         << " --no-skip-invalid   do not skip invalid data" << std::endl
+        << " --format=FORMAT     JSON output format (geojson, dballe. Default: geojson)" << std::endl
         << " -h,--help           show this help and exit" << std::endl
         << " -V,--version        show version and exit" << std::endl
         << std::endl
@@ -509,6 +510,7 @@ int main(int argc, char **argv)
         int attributes;
         int geohash;
         int skip_invalid;
+        std::string format;
     } input_options = {
         false,
         true,
@@ -516,7 +518,8 @@ int main(int argc, char **argv)
         false,
         false,
         0,
-        true
+        true,
+        "geojson",
     };
     std::list<std::string> inputlist;
 
@@ -529,6 +532,7 @@ int main(int argc, char **argv)
             {"attributes",      no_argument,&input_options.attributes,   true },
             {"geohash",         optional_argument,0,                     'g'  },
             {"no-skip-invalid", no_argument,&input_options.skip_invalid, false},
+            {"format",          required_argument,0,                     'f'  },
             {"help",            no_argument,0,                           'h'  },
             {"version",         no_argument,0,                           'V'  },
             {0, 0, 0, 0 }
@@ -547,6 +551,11 @@ int main(int argc, char **argv)
                     input_options.geohash = ::atoi(optarg);
                 break;
             }
+            case 'f': {
+                input_options.format = optarg;
+                break;
+            }
+
             default: show_help(std::cerr); return 1;
         }
     }
@@ -567,9 +576,16 @@ int main(int argc, char **argv)
     opts.geohash = input_options.geohash;
     opts.skip_invalid = (input_options.skip_invalid ? true : false );
 
-    GeoJSONDumper dumper(std::cout, opts);
-
-    reader.read(inputlist, dumper);
+    if (input_options.format == "geojson") {
+        GeoJSONDumper dumper(std::cout, opts);
+        reader.read(inputlist, dumper);
+    } else if (input_options.format == "dballe") {
+        DballeJSONDumper dumper(std::cout, opts);
+        reader.read(inputlist, dumper);
+    } else {
+        std::cerr << "Invalid JSON format: '" << input_options.format << "'" << std::endl;
+        return 1;
+    }
 
     return 0;
 }
