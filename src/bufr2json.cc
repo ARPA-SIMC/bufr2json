@@ -352,6 +352,127 @@ struct GeoJSONDumper : public dballe::cmdline::Action {
   }
 };
 
+struct JSONDumper : public dballe::cmdline::Action {
+  private:
+    std::ostream& out;
+    DumperOptions opts;
+    YajlGenerator json;
+
+    void dump(int i) {
+        if (i != dballe::MISSING_INT)
+            json.add_int(i);
+        else
+            json.add_null();
+    }
+
+    void dump(const dballe::msg::Context& ctx) {
+        json.start_map();
+        if (not ctx.is_station()) {
+            json.add_string("timerange");
+            json.start_list();
+            dump(ctx.trange.pind);
+            dump(ctx.trange.p1);
+            dump(ctx.trange.p2);
+            json.end_list();
+            json.add_string("level");
+            json.start_list();
+            dump(ctx.level.ltype1);
+            dump(ctx.level.l1);
+            dump(ctx.level.ltype2);
+            dump(ctx.level.l2);
+            json.end_list();
+        }
+        json.add_string("vars");
+        json.start_map();
+        for (std::vector<wreport::Var*>::const_iterator i = ctx.data.begin(); i != ctx.data.end(); ++i) {
+            const wreport::Var& var = **i;
+            json.add_string(wreport::varcode_format(var.code()));
+            json.start_map();
+            json.add_string("v");
+            if (var.isset()) {
+                if (var.info()->type == wreport::Vartype::String ||
+                        var.info()->type == wreport::Vartype::Binary) {
+                    json.add_string(var.format());
+                } else {
+                    json.add_number(var.format());
+                }
+            } else {
+                json.add_null();
+            }
+            json.add_string("a");
+            json.start_map();
+            for (const wreport::Var* attr = var.next_attr(); attr != NULL; attr = attr->next_attr()) {
+                json.add_string(wreport::varcode_format(attr->code()));
+                if (attr->isset()) {
+                    if (attr->info()->type == wreport::Vartype::String ||
+                            attr->info()->type == wreport::Vartype::Binary) {
+                        json.add_string(attr->format());
+                    } else {
+                        json.add_number(attr->format());
+                    }
+                } else {
+                    json.add_null();
+                }
+            }
+            json.end_map();
+            json.end_map();
+        }
+        json.end_map();
+        json.end_map();
+    }
+
+    void dump(const dballe::Msg& msg) {
+        json.start_map();
+        json.add_string("network");
+        json.add_string(msg.get_rep_memo_var() ? msg.get_rep_memo_var()->enqc() : dballe::Msg::repmemo_from_type(msg.type));
+        json.add_string("ident");
+        if (msg.get_ident_var() != NULL)
+            json.add_string(msg.get_ident_var()->enqc());
+        else
+            json.add_null();
+        json.add_string("lon");
+        json.add_int(msg.get_longitude_var()->enqi());
+        json.add_string("lat");
+        json.add_int(msg.get_latitude_var()->enqi());
+        json.add_string("date");
+        std::stringstream ss;
+        msg.get_datetime().to_stream_iso8601(ss, 'T', "Z");
+        json.add_string(ss.str().c_str());
+        json.add_string("data");
+        json.start_list();
+        for (std::vector<dballe::msg::Context*>::const_iterator i = msg.data.begin(); i != msg.data.end(); ++i) {
+            dump(**i);
+            flush();
+        }
+        json.end_list();
+        json.end_map();
+        flush();
+    }
+    void dump(const dballe::Messages& msgs) {
+        for (dballe::Messages::const_iterator i = msgs.begin(); i != msgs.end(); ++i)
+            dump(dballe::Msg::downcast(*i));
+    }
+
+  public:
+    JSONDumper(std::ostream &out, DumperOptions &opts) : out(out), opts(opts), json(opts.beautify) {
+        json.start_list();
+    }
+    ~JSONDumper() {
+        json.end_list();
+        flush();
+    }
+
+    void flush() {
+        out << json.flush();
+    }
+
+    virtual bool operator()(const dballe::cmdline::Item& item) {
+        dump(*(item.msgs));
+        flush();
+        return true;
+    }
+};
+
 #include <getopt.h>
 
 void show_help(std::ostream& out) {
