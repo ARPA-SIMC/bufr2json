@@ -479,13 +479,6 @@ void show_help(std::ostream& out) {
     out << "Usage: bufr2json [OPTION]... [FILE]..."  << std::endl
         << "Convert BUFR files to JSON format" << std::endl
         << std::endl
-        << " --indent            generate indented output" << std::endl
-        << " --include-empty     include empty messages" << std::endl
-        << " --no-collapse       do not collapse properties" << std::endl
-        << " --station-ctx       print station context" << std::endl
-        << " --attributes        print attributes" << std::endl
-        << " --geohash[=LENGTH]  print geohash. LENGTH defaults to " << BUFR2JSON_DEFAULT_GEOHASH_SIZE << std::endl
-        << " --no-skip-invalid   do not skip invalid data" << std::endl
         << " --format=FORMAT     JSON output format (geojson, dballe. Default: geojson)" << std::endl
         << " -h,--help           show this help and exit" << std::endl
         << " -V,--version        show version and exit" << std::endl
@@ -503,59 +496,30 @@ void show_version(std::ostream& out) {
 int main(int argc, char **argv)
 {
     struct {
-        int indent;
-        int ignore_empty;
-        int collapse;
-        int station_ctx;
-        int attributes;
-        int geohash;
-        int skip_invalid;
         std::string format;
     } input_options = {
-        false,
-        true,
-        true,
-        false,
-        false,
-        0,
-        true,
         "geojson",
     };
     std::list<std::string> inputlist;
 
     while (1) {
         static struct option long_options[] = {
-            {"indent",          no_argument,&input_options.indent,       true },
-            {"include-empty",   no_argument,&input_options.ignore_empty, false},
-            {"no-collapse",     no_argument,&input_options.collapse,     false},
-            {"station-ctx",     no_argument,&input_options.station_ctx,  true },
-            {"attributes",      no_argument,&input_options.attributes,   true },
-            {"geohash",         optional_argument,0,                     'g'  },
-            {"no-skip-invalid", no_argument,&input_options.skip_invalid, false},
             {"format",          required_argument,0,                     'f'  },
             {"help",            no_argument,0,                           'h'  },
             {"version",         no_argument,0,                           'V'  },
             {0, 0, 0, 0 }
         };
         int option_index = 0;
-        int c = getopt_long(argc, argv, "hV", long_options, &option_index);
+        int c = getopt_long(argc, argv, "hVf:", long_options, &option_index);
         if (c == -1) break;
         switch (c) {
             case 0: break;
             case 'h': show_help(std::cout); return 0;
             case 'V': show_version(std::cout); return 0;
-            case 'g': {
-                if (optarg == 0)
-                    input_options.geohash = BUFR2JSON_DEFAULT_GEOHASH_SIZE;
-                else
-                    input_options.geohash = ::atoi(optarg);
-                break;
-            }
             case 'f': {
                 input_options.format = optarg;
                 break;
             }
-
             default: show_help(std::cerr); return 1;
         }
     }
@@ -568,13 +532,13 @@ int main(int argc, char **argv)
     dballe::cmdline::Reader reader;
 
     DumperOptions opts;
-    opts.beautify = ( input_options.indent ? true : false );
-    opts.ignore_empty = ( input_options.ignore_empty ? true : false );
-    opts.station_ctx = ( input_options.station_ctx ? true : false );
-    opts.collapse = ( input_options.collapse ? true : false );
-    opts.attributes = ( input_options.attributes ? true : false );
-    opts.geohash = input_options.geohash;
-    opts.skip_invalid = (input_options.skip_invalid ? true : false );
+    opts.beautify = false;
+    opts.ignore_empty = true;
+    opts.station_ctx = false;
+    opts.collapse = true;
+    opts.attributes = false;
+    opts.geohash = false;
+    opts.skip_invalid = false;
 
     std::unique_ptr<dballe::cmdline::Action> action;
     if (input_options.format == "geojson") {
