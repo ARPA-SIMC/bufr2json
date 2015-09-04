@@ -576,16 +576,17 @@ int main(int argc, char **argv)
     opts.geohash = input_options.geohash;
     opts.skip_invalid = (input_options.skip_invalid ? true : false );
 
+    std::unique_ptr<dballe::cmdline::Action> action;
     if (input_options.format == "geojson") {
-        GeoJSONDumper dumper(std::cout, opts);
-        reader.read(inputlist, dumper);
+        action.reset(new GeoJSONDumper(std::cout, opts));
     } else if (input_options.format == "dballe") {
-        DballeJSONDumper dumper(std::cout, opts);
-        reader.read(inputlist, dumper);
+        action.reset(new DballeJSONDumper(std::cout, opts));
     } else {
         std::cerr << "Invalid JSON format: '" << input_options.format << "'" << std::endl;
         return 1;
     }
+
+    reader.read(inputlist, *action);
 
     return 0;
 }
