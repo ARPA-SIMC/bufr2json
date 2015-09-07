@@ -20,15 +20,15 @@ LIBS="$LIBS $DBALLE_LIBS"
 CFLAGS="$CFLAGS $DBALLE_CFLAGS"
 
 AC_CHECK_LIB([yajl], [yajl_gen_alloc],
-	     [LIBS="$LIBS -lyajl"],
-	     [AC_MSG_ERROR(["libyajl not found"])])
+             [LIBS="$LIBS -lyajl"],
+             [AC_MSG_ERROR(["libyajl not found"])])
 
 AC_PATH_PROG([HELP2MAN], [help2man])
 AM_CONDITIONAL([HAVE_HELP2MAN], [test x$HELP2MAN != x])
 
 AC_CONFIG_FILES([Makefile
-		 embedded/libgeohash/Makefile
-		 src/Makefile
-		 doc/Makefile
-		 test/Makefile])
+                 embedded/libgeohash/Makefile
+                 src/Makefile
+                 doc/Makefile
+                 test/Makefile])
 AC_OUTPUT
