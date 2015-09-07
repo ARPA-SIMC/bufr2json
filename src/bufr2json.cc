@@ -479,7 +479,7 @@ void show_help(std::ostream& out) {
     out << "Usage: bufr2json [OPTION]... [FILE]..."  << std::endl
         << "Convert BUFR files to JSON format" << std::endl
         << std::endl
-        << " --format=FORMAT     JSON output format (geojson, dballe. Default: geojson)" << std::endl
+        << " -f,--format=FORMAT     JSON output format (geojson, dballe. Default: geojson)" << std::endl
         << " -h,--help           show this help and exit" << std::endl
         << " -V,--version        show version and exit" << std::endl
         << std::endl
