@@ -1,1 +1,1 @@
-SUBDIRS = embedded/libgeohash src doc test
+SUBDIRS = bufr2json embedded/libgeohash src doc test
