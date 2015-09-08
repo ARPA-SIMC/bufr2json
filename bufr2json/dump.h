@@ -31,6 +31,14 @@ class GeoJsonDumper : public JsonDumper {
     virtual bool operator()(const dballe::cmdline::Item& item) override;
 };
 
+class DballeJsonDumper : public JsonDumper {
+ public:
+    using JsonDumper::JsonDumper;
+    virtual void start_dump() override;
+    virtual void end_dump() override;
+    virtual bool operator()(const dballe::cmdline::Item& item) override;
+};
+
 }
 }
 
