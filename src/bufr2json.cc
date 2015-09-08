@@ -33,34 +33,8 @@
 #include <yajl/yajl_version.h>
 #include <yajl/yajl_gen.h>
 
-#include <geohash.h>
-
 #include <bufr2json/json.h>
 #include <bufr2json/dump.h>
-
-#define BUFR2JSON_DEFAULT_GEOHASH_SIZE 12
-
-/**
- * Options for the dumper
- */
-struct DumperOptions {
-    /// if true, beautify the output
-    bool beautify;
-    /// if true, ignore empty messages
-    bool ignore_empty;
-    /// if true, output the station contexts
-    bool station_ctx;
-    /// if true, collapse the properties
-    bool collapse;
-    // if true, output the attributes
-    bool attributes;
-    // if positive, dump geohash
-    int geohash;
-    // if true, skip invalid data
-    bool skip_invalid;
-
-    DumperOptions() : beautify(false), ignore_empty(true), station_ctx(false), collapse(true), attributes(false), geohash(0), skip_invalid(true) {}
-};
 
 
 #include <getopt.h>
@@ -75,13 +49,10 @@ void show_help(std::ostream& out) {
         << std::endl
         << "With no FILE, or when FILE is -, read standard input" << std::endl;
 }
+
 void show_version(std::ostream& out) {
     out << "bufr2json " << PACKAGE_VERSION << std::endl;
 }
-
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
 
 int main(int argc, char **argv)
 {
@@ -120,15 +91,6 @@ int main(int argc, char **argv)
     }
 
     dballe::cmdline::Reader reader;
-
-    DumperOptions opts;
-    opts.beautify = false;
-    opts.ignore_empty = true;
-    opts.station_ctx = false;
-    opts.collapse = true;
-    opts.attributes = false;
-    opts.geohash = false;
-    opts.skip_invalid = false;
 
     using bufr2json::dump::JsonDumper;
     using bufr2json::dump::GeoJsonDumper;
