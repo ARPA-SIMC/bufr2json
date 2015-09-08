@@ -47,7 +47,7 @@ void show_help(std::ostream& out) {
         << " -h,--help           show this help and exit" << std::endl
         << " -V,--version        show version and exit" << std::endl
         << std::endl
-        << "With no FILE, or when FILE is -, read standard input" << std::endl;
+        << "With no FILE read standard input" << std::endl;
 }
 
 void show_version(std::ostream& out) {
@@ -86,7 +86,7 @@ int main(int argc, char **argv)
     }
     while (optind < argc) {
         std::string f(argv[optind++]);
-        if (f == "-") f = "(stdin)";
+        if (f == "-") f = "";
         inputlist.push_back(f);
     }
 
