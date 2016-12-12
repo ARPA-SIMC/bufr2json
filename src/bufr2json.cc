@@ -90,7 +90,8 @@ int main(int argc, char **argv)
         inputlist.push_back(f);
     }
 
-    dballe::cmdline::Reader reader;
+    const dballe::cmdline::ReaderOptions opts;
+    dballe::cmdline::Reader reader(opts);
 
     using bufr2json::dump::JsonDumper;
     using bufr2json::dump::GeoJsonDumper;
