@@ -1,5 +1,5 @@
 Name:           bufr2json
-Version:        0.14
+Version:        0.15
 Release:        1%{?dist}
 Summary:        BUFR to JSON converter
 
@@ -39,6 +39,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Dec 12 2016 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.15-1
+- dballe 7.21 support
+
 * Tue Sep  8 2015 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.14-1
 - Minor changes
 
