@@ -1,4 +1,4 @@
-%global releaseno 1
+%global releaseno 2
 # Note: define _srcarchivename in Travis build only.
 %{!?srcarchivename: %global srcarchivename %{name}-%{version}-%{releaseno}}
 
@@ -42,6 +42,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jun  6 2018 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.15-2
+- Updated spec file
+
 * Mon Dec 12 2016 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.15-1
 - dballe 7.21 support
 
