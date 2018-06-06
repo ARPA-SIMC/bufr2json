@@ -4,7 +4,8 @@ Release:        1%{?dist}
 Summary:        BUFR to JSON converter
 
 License:        GPLv2+
-URL:            http://www.arpa.emr.it/sim
+URL:            https://github.com/arpa-simc/%{name}
+Source0:        https://github.com/arpa-simc/%{name}/archive/v%{version}-%{release}.tar.gz#/%{name}-%{version}-%{release}.tar.gz
 Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires:  libdballe-devel >= 7.2-1
