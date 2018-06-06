@@ -1,13 +1,14 @@
+%global releaseno 1
+# Note: define _srcarchivename in Travis build only.
+%{!?srcarchivename: %global srcarchivename %{name}-%{version}-%{releaseno}}
+
 Name:           bufr2json
 Version:        0.15
-Release:        1%{?dist}
+Release:        %{releaseno}%{?dist}
 Summary:        BUFR to JSON converter
-
 License:        GPLv2+
 URL:            https://github.com/arpa-simc/%{name}
-Source0:        https://github.com/arpa-simc/%{name}/archive/v%{version}-%{release}.tar.gz#/%{name}-%{version}-%{release}.tar.gz
-Source0:        %{name}-%{version}.tar.gz
-
+Source0:        https://github.com/arpa-simc/%{name}/archive/v%{version}-%{releaseno}.tar.gz#/%{srcarchivename}.tar.gz
 BuildRequires:  libdballe-devel >= 7.2-1
 BuildRequires:  yajl-devel
 BuildRequires:  help2man
@@ -19,10 +20,11 @@ BUFR to JSON converter
 
 
 %prep
-%setup -q
+%setup -q -n %{srcarchivename}
 
 
 %build
+autoreconf -ifv
 %configure
 make %{?_smp_mflags}
 
