@@ -40,7 +40,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc %{_mandir}/man1/*
 
 
-
 %changelog
 * Wed Jun  6 2018 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.15-2
 - Updated spec file
