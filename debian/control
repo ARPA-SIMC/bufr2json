@@ -1,7 +1,7 @@
 Source: bufr2json
 Section: misc
 Priority: optional
-Maintainer: Emanuele Di Giacomo <edigiacomo@arpa.emr.it>
+Maintainer: Emanuele Di Giacomo <edigiacomo@arpae.it>
 Build-Depends: debhelper (>= 8.0.0), autotools-dev, hardening-wrapper, help2man, libyajl-dev, libdballe-dev
 Standards-Version: 3.9.3
 

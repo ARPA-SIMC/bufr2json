@@ -48,40 +48,40 @@ rm -rf $RPM_BUILD_ROOT
 * Mon Dec 12 2016 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.15-1
 - dballe 7.21 support
 
-* Tue Sep  8 2015 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.14-1
+* Tue Sep  8 2015 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.14-1
 - Minor changes
 
-* Fri Sep  4 2015 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.13-1
+* Fri Sep  4 2015 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.13-1
 - Removed options
 - Dballe format
 
-* Mon May 25 2015 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.10-1
+* Mon May 25 2015 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.10-1
 - Fixed for dballe API > 7.1-4737
 
-* Wed May 20 2015 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.9-1
+* Wed May 20 2015 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.9-1
 - Added --attributes option
 
-* Tue Feb 25 2014 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.8-1
+* Tue Feb 25 2014 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.8-1
 - "ident" property
 
-* Wed Feb 19 2014 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.7.1-1
+* Wed Feb 19 2014 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.7.1-1
 - Optional geohash size
 - Fixed segfault
 
-* Thu Feb 06 2014 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.6-1
+* Thu Feb 06 2014 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.6-1
 - "lon" and "lat" properties
 
-* Fri Jul 05 2013 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.5-1
+* Fri Jul 05 2013 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.5-1
 - Skip invalid data
 
-* Fri Jul 05 2013 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.4-1
+* Fri Jul 05 2013 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.4-1
 - Data attributes and geohash support
 
-* Tue Jul 02 2013 Emanuele Di Giacomo <edigiacomo@arpa.emr.it> - 0.3-1
+* Tue Jul 02 2013 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.3-1
 - Bug fix
 
 * Wed May 15 2013 Daniele Branchini <dbranchini@carenza.metarpa> - 0.2-1
 - Second release :)
 
-* Mon Apr 22 2013 Emanuele Di Giacomo <edigiacomo@arpa.emr.it>
+* Mon Apr 22 2013 Emanuele Di Giacomo <edigiacomo@arpae.it>
 - First release
