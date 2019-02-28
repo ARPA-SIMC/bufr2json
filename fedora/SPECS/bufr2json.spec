@@ -1,20 +1,18 @@
-%global releaseno 2
+%global releaseno 1
 # Note: define _srcarchivename in Travis build only.
 %{!?srcarchivename: %global srcarchivename %{name}-%{version}-%{releaseno}}
 
 Name:           bufr2json
-Version:        0.15
+Version:        0.16
 Release:        %{releaseno}%{?dist}
 Summary:        BUFR to JSON converter
 License:        GPLv2+
 URL:            https://github.com/arpa-simc/%{name}
 Source0:        https://github.com/arpa-simc/%{name}/archive/v%{version}-%{releaseno}.tar.gz#/%{srcarchivename}.tar.gz
-BuildRequires:  libtool
-BuildRequires:  libdballe-devel >= 7.2-1
-BuildRequires:  yajl-devel
-BuildRequires:  help2man
-Requires:       yajl
-Requires:       dballe >= 7.2-1
+BuildRequires:  python3
+BuildRequires:  python3-dballe >= 8.0
+Requires:       python3
+Requires:       python3-dballe >= 8.0
 
 %description
 BUFR to JSON converter
@@ -38,10 +36,13 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %doc
 %{_bindir}/bufr2json
-%doc %{_mandir}/man1/*
-
 
 %changelog
+* Thu Feb 28 2019 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.16-1
+- dballe 8 support
+- Python rewrite
+- Removed dballe json support
+
 * Wed Jun  6 2018 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.15-2
 - Updated spec file
 
