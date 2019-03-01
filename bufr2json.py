@@ -36,16 +36,13 @@ if __name__ == '__main__':
                     with explorer.rebuild() as update:
                         update.add_messages(msg)
 
-                    for l, t, v in (
-                        (l, t, v)
-                        for l in explorer.all_levels
-                        for t in explorer.all_tranges
-                        for v in explorer.all_varcodes
-                    ):
-                        var = msg.get(l, t, v)
-                        if var is None:
-                            continue
+                    for summ in explorer.query_summary_all():
+                        l = summ["level"]
+                        t = summ["trange"]
+                        v = summ["var"]
+
                         if l is None and t is None:
+                            # Ignore constant station data
                             continue
 
                         if not is_first:
@@ -72,8 +69,8 @@ if __name__ == '__main__':
                                 "trange_pind": t.pind if t is not None else None,
                                 "trange_p1": t.p1 if t is not None else None,
                                 "trange_p2": t.p2 if t is not None else None,
-                                "bcode": var.code,
-                                "value": var.get(),
+                                "bcode": v,
+                                "value": msg.get(l, t, v).get(),
                             }
                         }, out)
 
