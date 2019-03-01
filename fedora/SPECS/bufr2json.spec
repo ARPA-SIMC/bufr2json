@@ -1,6 +1,9 @@
 %global releaseno 1
 # Note: define _srcarchivename in Travis build only.
 %{!?srcarchivename: %global srcarchivename %{name}-%{version}-%{releaseno}}
+# Python 3 package names
+%{?el7:%define python3_vers python34}
+%{?fedora:%define python3_vers python3}
 
 Name:           bufr2json
 Version:        0.16
@@ -9,10 +12,12 @@ Summary:        BUFR to JSON converter
 License:        GPLv2+
 URL:            https://github.com/arpa-simc/%{name}
 Source0:        https://github.com/arpa-simc/%{name}/archive/v%{version}-%{releaseno}.tar.gz#/%{srcarchivename}.tar.gz
-BuildRequires:  python3
-BuildRequires:  python3-dballe >= 8.0
-Requires:       python3
-Requires:       python3-dballe >= 8.0
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  %{python3_vers}
+BuildRequires:  %{python3_vers}-dballe >= 8.0
+Requires:       %{python3_vers}
+Requires:       %{python3_vers}-dballe >= 8.0
 
 %description
 BUFR to JSON converter
