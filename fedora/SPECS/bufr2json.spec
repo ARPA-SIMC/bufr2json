@@ -6,7 +6,7 @@
 %{?fedora:%define python3_vers python3}
 
 Name:           bufr2json
-Version:        0.16
+Version:        0.17
 Release:        %{releaseno}%{?dist}
 Summary:        BUFR to JSON converter
 License:        GPLv2+
@@ -44,6 +44,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/bufr2json
 
 %changelog
+* Fri Mar  1 2019 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.17-1
+- Optimizations
+
 * Thu Feb 28 2019 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.16-1
 - dballe 8 support
 - Python rewrite
