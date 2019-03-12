@@ -14,6 +14,10 @@ env:
     - DOCKER_IMAGE=fedora:29
     - DOCKER_IMAGE=fedora:rawhide
 
+matrix:
+    allow_failures:
+        - env: DOCKER_IMAGE=fedora:rawhide
+
 before_deploy:
     - openssl aes-256-cbc -K $encrypted_e567c0338725_key -iv $encrypted_e567c0338725_iv -in .copr.enc -out .copr -d
 
