@@ -1,4 +1,4 @@
-%global releaseno 1
+%global releaseno 2
 # Note: define _srcarchivename in Travis build only.
 %{!?srcarchivename: %global srcarchivename %{name}-%{version}-%{releaseno}}
 # Python 3 package names
@@ -18,6 +18,7 @@ BuildRequires:  automake
 BuildRequires:  %{python3_vers}
 BuildRequires:  %{python3_vers}-dballe >= 8.0
 Requires:       %{python3_vers}
+Requires:       %{python3_vers}-simplejson
 Requires:       %{python3_vers}-dballe >= 8.0
 
 %description
@@ -44,6 +45,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/bufr2json
 
 %changelog
+* Wed Mar 27 2019 Daniele Branchini <dbranchini@arpae.it> - 0.17-2
+- Added missing dependency
+
 * Fri Mar  1 2019 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.17-1
 - Optimizations
 
