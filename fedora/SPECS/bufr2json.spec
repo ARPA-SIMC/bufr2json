@@ -1,4 +1,4 @@
-%global releaseno 2
+%global releaseno 3
 # Note: define _srcarchivename in Travis build only.
 %{!?srcarchivename: %global srcarchivename %{name}-%{version}-%{releaseno}}
 # Python 3 package names
@@ -45,6 +45,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/bufr2json
 
 %changelog
+* Thu Jun  6 2019 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.17-3
+- python36 for CentOS
+
 * Wed Mar 27 2019 Daniele Branchini <dbranchini@arpae.it> - 0.17-2
 - Added missing dependency
 
