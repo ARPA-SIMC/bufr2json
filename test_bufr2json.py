@@ -8,7 +8,7 @@ class TestBufr2Json(unittest.TestCase):
         geojson = json.loads(subprocess.check_output(["./bufr2json", "test.bufr"]))
         self.assertEqual(len(geojson.keys()), 2)
         self.assertEqual(geojson["type"], "FeatureCollection")
-        self.assertEqual(len(geojson["features"]), 1)
+        self.assertEqual(len(geojson["features"]), 2)
         feature = geojson["features"][0]
         self.assertEqual(len(feature.keys()), 3)
         self.assertEqual(feature["type"], "Feature")

@@ -34,6 +34,12 @@ if __name__ == '__main__':
                     for cur in msg.query_data():
                         lev = cur["level"]
                         tr = cur["trange"]
+
+                        if not is_first:
+                            out.write(",")
+                        else:
+                            is_first = False
+
                         var = cur["variable"]
                         json.dump({
                             "type": "Feature",
