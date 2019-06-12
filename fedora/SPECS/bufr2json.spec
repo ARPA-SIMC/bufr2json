@@ -1,4 +1,4 @@
-%global releaseno 3
+%global releaseno 1
 # Note: define _srcarchivename in Travis build only.
 %{!?srcarchivename: %global srcarchivename %{name}-%{version}-%{releaseno}}
 # Python 3 package names
@@ -6,7 +6,7 @@
 %{?fedora:%define python3_vers python3}
 
 Name:           bufr2json
-Version:        0.17
+Version:        0.18
 Release:        %{releaseno}%{?dist}
 Summary:        BUFR to JSON converter
 License:        GPLv2+
@@ -48,6 +48,10 @@ make check
 %{_bindir}/bufr2json
 
 %changelog
+* Wed Jun 12 2019 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.18-1
+- Use cursor-based iteration
+- Test suite
+
 * Thu Jun  6 2019 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.17-3
 - python36 for CentOS
 
