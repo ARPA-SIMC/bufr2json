@@ -8,22 +8,9 @@ import dballe
 __version__ = '@PACKAGE_VERSION@'
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Convert BUFR files to GeoJSON format")
-    parser.add_argument("inputfile", nargs="*", metavar="FILE", help="BUFR file")
-    parser.add_argument('-V', '--version', action='version',
-                        version='%(prog)s ' + __version__)
-
-    args = parser.parse_args()
-
-    out = sys.stdout
+def main(inputfiles, out):
 
     importer = dballe.Importer("BUFR")
-
-    if not args.inputfile:
-        inputfiles = [sys.stdin]
-    else:
-        inputfiles = args.inputfile
 
     out.write('{"type":"FeatureCollection", "features":[')
     for f in inputfiles:
@@ -66,3 +53,19 @@ if __name__ == '__main__':
                         }, out)
 
     out.write("]}")
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Convert BUFR files to GeoJSON format")
+    parser.add_argument("inputfile", nargs="*", metavar="FILE", help="BUFR file")
+    parser.add_argument('-V', '--version', action='version',
+                        version='%(prog)s ' + __version__)
+
+    args = parser.parse_args()
+
+    if not args.inputfile:
+        inputfiles = [sys.stdin]
+    else:
+        inputfiles = args.inputfile
+
+    main(inputfiles, sys.stdout)
