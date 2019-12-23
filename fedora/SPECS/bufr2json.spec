@@ -2,8 +2,12 @@
 # Note: define _srcarchivename in Travis build only.
 %{!?srcarchivename: %global srcarchivename %{name}-%{version}-%{releaseno}}
 # Python 3 package names
-%{?el7:%define python3_vers python36}
-%{?fedora:%define python3_vers python3}
+# Python 3 package names
+%if 0%{?rhel} == 7
+%define python3_vers python36
+%else
+%define python3_vers python3
+%endif
 
 Name:           bufr2json
 Version:        0.18
