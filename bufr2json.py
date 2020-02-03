@@ -32,11 +32,11 @@ def main(inputfiles, out):
                             "type": "Feature",
                             "geometry": {
                                 "type": "Point",
-                                "coordinates": [cur.enqd("lat"), cur.enqd("lon")],
+                                "coordinates": [cur.enqd("lon"), cur.enqd("lat")],
                             },
                             "properties": {
-                                "lon": cur.enqi("lat"),
-                                "lat": cur.enqi("lon"),
+                                "lon": cur.enqi("lon"),
+                                "lat": cur.enqi("lat"),
                                 "datetime": cur["datetime"].strftime("%Y-%m-%dT%H:%M:%SZ"),
                                 "network": cur["report"],
                                 "ident": cur["ident"],
