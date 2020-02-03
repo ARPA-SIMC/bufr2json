@@ -19,11 +19,11 @@ class TestBufr2Json(unittest.TestCase):
         self.assertEqual(len(feature.keys()), 3)
         self.assertEqual(feature["type"], "Feature")
         self.assertEqual(feature["geometry"]["type"], "Point")
-        self.assertEqual(feature["geometry"]["coordinates"],
-                         [44.60016, 12.07738])
+        self.assertEqual(feature["geometry"]["coordinates"][0], 12.07738)
+        self.assertEqual(feature["geometry"]["coordinates"][1], 44.60016)
         properties = feature["properties"]
-        self.assertEqual(properties["lon"], 4460016)
-        self.assertEqual(properties["lat"], 1207738)
+        self.assertEqual(properties["lon"], 1207738)
+        self.assertEqual(properties["lat"], 4460016)
         self.assertEqual(properties["datetime"], "2019-01-02T03:04:00Z")
         self.assertEqual(properties["network"], "locali")
         self.assertEqual(properties["ident"], None)
