@@ -10,7 +10,7 @@
 %endif
 
 Name:           bufr2json
-Version:        0.18
+Version:        0.19
 Release:        %{releaseno}%{?dist}
 Summary:        BUFR to JSON converter
 License:        GPLv2+
@@ -52,6 +52,9 @@ make check
 %{_bindir}/bufr2json
 
 %changelog
+* Mon Feb  3 2020 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.19-1
+- Fixed coordinates
+
 * Wed Jun 12 2019 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.18-1
 - Use cursor-based iteration
 - Test suite
