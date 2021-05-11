@@ -1,4 +1,4 @@
-%global releaseno 1
+%global releaseno 2
 # Note: define _srcarchivename in Travis build only.
 %{!?srcarchivename: %global srcarchivename %{name}-%{version}-%{releaseno}}
 # Python 3 package names
@@ -19,6 +19,7 @@ Source0:        https://github.com/arpa-simc/%{name}/archive/v%{version}-%{relea
 BuildArch:      noarch
 BuildRequires:  autoconf
 BuildRequires:  automake
+BuildRequires:  make
 BuildRequires:  %{python3_vers}
 BuildRequires:  %{python3_vers}-dballe >= 8.0
 Requires:       %{python3_vers}
@@ -52,6 +53,9 @@ make check
 %{_bindir}/bufr2json
 
 %changelog
+* Tue May 11 2021 Daniele Branchini <dbranchini@arpae.it> - 0.19-2
+- Added missing dependency
+
 * Mon Feb  3 2020 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.19-1
 - Fixed coordinates
 
