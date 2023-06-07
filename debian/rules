@@ -12,4 +12,4 @@
 export DEB_BUILD_HARDENING=1
 
 %:
-	dh $@  --with autotools-dev
+	dh $@
