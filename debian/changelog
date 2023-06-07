@@ -1,15 +1,8 @@
-bufr2json (0.19) unstable; urgency=low
+bufr2json (0.19-1) unstable; urgency=low
 
   * Version 0.19
 
  -- Emanuele Di Giacomo <edigiacomo@arpae.it>  Wed, 07 Jun 2023 10:20:03 +0200
-
-bufr2json (0.14) UNRELEASED; urgency=low
-
-  * dballe format
-  * Removed some options 
-
- -- Emanuele Di Giacomo <edigiacomo@arpae.it>  Tue, 08 Sep 2015 11:24:50 +0200
 
 bufr2json (0.8-1) unstable; urgency=low
 
