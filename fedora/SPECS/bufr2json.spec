@@ -1,4 +1,4 @@
-%global releaseno 2
+%global releaseno 1
 # Note: define _srcarchivename in Travis build only.
 %{!?srcarchivename: %global srcarchivename %{name}-%{version}-%{releaseno}}
 # Python 3 package names
@@ -10,7 +10,7 @@
 %endif
 
 Name:           bufr2json
-Version:        0.19
+Version:        0.20
 Release:        %{releaseno}%{?dist}
 Summary:        BUFR to JSON converter
 License:        GPLv2+
@@ -23,7 +23,6 @@ BuildRequires:  make
 BuildRequires:  %{python3_vers}
 BuildRequires:  %{python3_vers}-dballe >= 8.0
 Requires:       %{python3_vers}
-Requires:       %{python3_vers}-simplejson
 Requires:       %{python3_vers}-dballe >= 8.0
 
 %description
@@ -53,6 +52,9 @@ make check
 %{_bindir}/bufr2json
 
 %changelog
+* Wed Jun  7 2023 Emanuele Di Giacomo <edigiacomo@arpae.it> - 0.20-1
+- New version to reflect upstream
+
 * Tue May 11 2021 Daniele Branchini <dbranchini@arpae.it> - 0.19-2
 - Added missing dependency
 
